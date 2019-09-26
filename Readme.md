@@ -1,6 +1,6 @@
 ## Запуск приложения
 1. docker-compose up -d
-2. Увеличение/уменьшие инстанций сервисов - docker-compose scale service_name:total_count
+2. Увеличение/уменьшие инстанций сервисов - docker-compose scale service_name=total_count
 3. Доступ к API по порту 8000
 4. Доступ к WS по порту 3000
 
