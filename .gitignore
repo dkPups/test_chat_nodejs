@@ -1,3 +1,5 @@
+.idea/
+
 # Logs
 logs
 *.log
@@ -34,6 +36,9 @@ build/Release
 
 # Dependency directories
 node_modules/
+chat-api/node_modules/
+ws-api/node_modules/
+test/node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -54,8 +59,7 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
 # next.js build output
 .next
+
+volumes/*

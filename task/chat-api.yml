@@ -1,0 +1,193 @@
+openapi: "3.0.1"
+
+info:
+  description: 'Simple HTTP API for Chats'
+  version: '1.0.0'
+  title: 'Basic chat API'
+  termsOfService: 'https://iqoption.com/en/terms-and-conditions/terms-conditions'
+
+externalDocs:
+  description: 'Find out more about OpenAPI 3'
+  url: 'http://swagger.io'
+
+servers:
+  - url: https://chat.iqoption-darkest-internals.com
+    description: Production server
+  - url: https://chat.stage.iqoption-darkest-internals.com
+    description: Staging server
+
+tags:
+  - name: "messages"
+    description: "Everything about messages"
+
+paths:
+  /message:
+    post:
+      summary: 'Add a new message to existing room'
+      tags: [messages]
+      security:
+        - cookieAuth: []
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageParameters'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendMessageParameters'
+      responses:
+        201:
+          description: 'Created: message successfuly created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        400:
+          description: 'Bad request: required parameters missing or invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: 'Not authorized: only authorized users can send messages'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: 'Not found: room not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: 'Internal server error: something went wrong on server side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  /room:
+    get:
+      summary: 'Returns list of chat rooms'
+      tags: [rooms]
+    responses:
+      200:
+        description: 'Ok: server returned list of rooms'
+        content:
+          application/json:
+            schema: 
+              type: array
+              items:
+                $ref: '#/components/schemas/Room'
+      500:
+        description: 'Internal server error: something went wrong on server side'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorResponse'
+
+
+  /room/{roomId}/messages:
+    get:
+      summary: 'Returns list of messages in room by roomId'
+      tags: [messages]
+      parameters: 
+        - name: roomId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'Ok: server return list of messages for specified room'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
+        400:
+          description: 'Bad request: roomId is invalid'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: 'Not found: room with specified identifier not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: 'Internal server error: something went wrong on server side'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes: 
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionId
+      
+  schemas:
+    SendMessageParameters:
+      required:
+        - text
+        - roomId
+      properties:
+        text:
+          type: string
+          description: 'Message text'
+        roomId:
+          type: string
+          description: 'Chat room identifier'
+
+    Room:
+      required:
+        - type
+        - name
+      properties:
+        id: 
+          type: string
+        name:
+          type: string
+
+
+    Message:
+      required:
+        - text
+        - room
+        - user
+      properties:
+        text:
+          type: string
+        room:
+          type: object
+          properties:
+            id: 
+              type: string
+            name:
+              type: string
+        user:
+          type: object
+          properties:
+            id: 
+              type: string
+            name:
+              type: string
+            avatar:
+              type: string
+              description: 'URL to user avatar image'
+              format: url
+
+    ErrorResponse:
+      required:
+        - error
+      properties:
+        error:
+          type: string

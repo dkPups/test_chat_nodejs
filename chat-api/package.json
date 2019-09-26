@@ -1,0 +1,22 @@
+{
+  "name": "test-iqoption",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "dkPups",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.5.5",
+    "bluebird": "^3.5.5",
+    "body-parser": "^1.19.0",
+    "connect-redis": "^4.0.2",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "lodash": "^4.17.15",
+    "pg-promise": "^9.2.1",
+    "redis": "^2.8.0"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}

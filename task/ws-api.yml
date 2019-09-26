@@ -1,0 +1,38 @@
+summary: 'WebSocket API for chats'
+
+servers:
+  - url: https://chat.iqoption-darkest-internals.com/ws
+    description: Production server
+  - url: https://chat.stage.iqoption-darkest-internals.com/ws
+    description: Staging server
+
+serverEvent:
+  newMessage:
+    description: 'This event fires to all subscribers when someone sends new message to any chat room'
+    schema:
+      type: object
+      required:
+        - text
+        - room
+        - user
+      properties:
+        text:
+          type: string
+        room:
+          type: object
+          properties:
+            id: 
+              type: string
+            name:
+              type: string
+        user:
+          type: object
+          properties:
+            id: 
+              type: string
+            name:
+              type: string
+            avatar:
+              type: string
+              description: 'URL to user avatar image'
+              format: url

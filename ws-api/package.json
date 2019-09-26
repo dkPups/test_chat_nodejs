@@ -1,0 +1,17 @@
+{
+  "name": "ws-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "dkPups",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.5.5",
+    "lodash": "^4.17.15",
+    "redis": "^2.8.0",
+    "socket.io": "^2.3.0",
+    "socket.io-redis": "^5.2.0"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}

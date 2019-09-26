@@ -1,0 +1,17 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.0",
+    "request": "^2.88.0",
+    "socket.io-client": "^2.3.0"
+  },
+  "scripts": {
+      "test-api": "node ./node_modules/mocha/bin/mocha ./api/*.test.js",
+      "test-case": "node ./node_modules/mocha/bin/mocha ./integration-test-case/Integration.test.js"
+  }
+}
